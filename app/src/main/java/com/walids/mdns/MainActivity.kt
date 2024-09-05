@@ -1,13 +1,19 @@
 package com.walids.mdns
 
+import android.appwidget.AppWidgetManager
+import android.appwidget.AppWidgetProviderInfo
+import android.content.ComponentName
+import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -18,6 +24,29 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         val button:Button = findViewById(R.id.button)
+        button.setOnClickListener {
+            addWidgetToHomeScreen()
+        }
+    }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun addWidgetToHomeScreen() {
+        val appWidgetManager = AppWidgetManager.getInstance(this)
+        val myProvider = ComponentName(this, MyAppWidgetProvider::class.java)
+
+        if (appWidgetManager.isRequestPinAppWidgetSupported) {
+            // Create an AppWidgetProviderInfo instance
+            val appWidgetInfo = AppWidgetProviderInfo().apply {
+                minWidth = 40 // Set the minimum width of the widget
+                minHeight = 40 // Set the minimum height of the widget
+                initialLayout = R.layout.widget_layout // Set the layout resource for the widget// Set other properties as needed
+            }
+
+            // Request to pin the widget
+            appWidgetManager.requestPinAppWidget(myProvider, null, null)
+        } else {
+            // Handle the case where pinning widgets is not supported
+            // For example, show a message to the user
+        }
     }
 }

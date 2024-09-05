@@ -25,13 +25,11 @@ class MyAppWidgetProvider : AppWidgetProvider() {
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds)
 
             val pendingIntent = PendingIntent.getBroadcast(
-                context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT
+                context, 0, intent, PendingIntent.FLAG_IMMUTABLE
             )
 
-            views.setOnClickPendingIntent(R.id.widget_button, pendingIntent)
-
             // Update the widget's text
-            views.setTextViewText(R.id.widget_text, "Updated Text")
+            views.setTextViewText(R.id.widget_text, "TEXT")
 
             appWidgetManager?.updateAppWidget(appWidgetId, views)
         }
