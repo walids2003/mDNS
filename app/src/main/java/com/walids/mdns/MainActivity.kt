@@ -3,9 +3,11 @@ package com.walids.mdns
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProviderInfo
 import android.content.ComponentName
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.widget.Button
+import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -27,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         button.setOnClickListener {
             addWidgetToHomeScreen()
         }
+        val editText: EditText = findViewById(R.id.editTextText)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -35,13 +38,6 @@ class MainActivity : AppCompatActivity() {
         val myProvider = ComponentName(this, MyAppWidgetProvider::class.java)
 
         if (appWidgetManager.isRequestPinAppWidgetSupported) {
-            // Create an AppWidgetProviderInfo instance
-            val appWidgetInfo = AppWidgetProviderInfo().apply {
-                minWidth = 40 // Set the minimum width of the widget
-                minHeight = 40 // Set the minimum height of the widget
-                initialLayout = R.layout.widget_layout // Set the layout resource for the widget// Set other properties as needed
-            }
-
             // Request to pin the widget
             appWidgetManager.requestPinAppWidget(myProvider, null, null)
         } else {
