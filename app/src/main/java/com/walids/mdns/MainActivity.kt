@@ -3,9 +3,11 @@ package com.walids.mdns
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProviderInfo
 import android.content.ComponentName
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
@@ -25,11 +27,21 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        val editText:EditText = findViewById(R.id.editTextText)
         val button:Button = findViewById(R.id.button)
+
         button.setOnClickListener {
+            val text = editText.text.toString()
+            // Prepare the intent to update the widget
+            val intent = Intent(this, MyAppWidgetProvider::class.java).apply {
+                action = "com.example.EDITTEXT_CLICK"
+                putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
+                putExtra("widgetText", text)
+            }
+            // Send the broadcast to the widget provider
+            sendBroadcast(intent)
             addWidgetToHomeScreen()
         }
-        val editText: EditText = findViewById(R.id.editTextText)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
