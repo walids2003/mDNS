@@ -22,7 +22,7 @@ class MyAppWidgetProvider : AppWidgetProvider() {
             )
 
             val views = RemoteViews(context.packageName, R.layout.widget_layout).apply {
-                setOnClickPendingIntent(R.id.button, editTextPendingIntent)
+                setOnClickPendingIntent(R.id.widget_text, editTextPendingIntent)
             }
 
             // Update the widget with the new RemoteViews
@@ -47,5 +47,9 @@ class MyAppWidgetProvider : AppWidgetProvider() {
             val widgetComponent = ComponentName(context, MyAppWidgetProvider::class.java)
             appWidgetManager.updateAppWidget(widgetComponent, remoteViews)
         }
+    }
+
+    override fun onEnabled(context: Context?) {
+        super.onEnabled(context)
     }
 }
