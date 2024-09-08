@@ -4,9 +4,6 @@ import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.os.Bundle
 import android.widget.Button
-import android.widget.EditText
-import android.widget.RemoteViews
-import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -23,10 +20,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         val button:Button = findViewById(R.id.button)
-        button.setOnClickListener {
-            addWidgetToHomeScreen()
-            setWidgetText()
-        }
+        button.setOnClickListener { addWidgetToHomeScreen() }
     }
 
     private fun addWidgetToHomeScreen() {
@@ -36,16 +30,7 @@ class MainActivity : AppCompatActivity() {
             // Request to pin the widget
             appWidgetManager.requestPinAppWidget(myProvider, null, null)
         } else {
-            // TODO:Handle the case where pinning widgets is not supported, For example, show a message to the user } }
+            // TODO:Handle the case where pinning widgets is not supported, For example, show a message to the user
         }
-    }
-
-    private fun setWidgetText() {
-        val edittext: EditText = findViewById(R.id.editTextText)
-        val appWidgetManager = AppWidgetManager.getInstance(this)
-        val myProvider = ComponentName(this, MyAppWidgetProvider::class.java)
-        val views = RemoteViews(this.packageName, R.layout.widget_layout)
-        views.setTextViewText(R.id.widget_text, edittext.text)
-        appWidgetManager.updateAppWidget(myProvider, views)
     }
 }
